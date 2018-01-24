@@ -20,3 +20,37 @@ main {
     margin: 0;
     padding: 15px;
 } */
+.maintenance_header{
+    background-color: red;
+    color: white;
+    text-align: center;
+    font-size: 16pt;
+}
+
+.icon_image{
+    height: 18px;
+    width: 18px;
+}
+
+body{
+    color: black;
+}
+
+.maintenance_p{
+    margin-bottom: 0;
+}
+
+.dropdown-menu{
+    background-color: black;
+}
+.bottom_footer{
+    text-align: center;
+    margin-top: 15px;
+    font-size: 16pt;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.form-control{
+    color: black;
+}

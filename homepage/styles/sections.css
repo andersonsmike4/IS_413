@@ -1,0 +1,19 @@
+.top_content{
+    background-color: orange;
+
+}
+.middle_content{
+    background-color: purple;
+    height:900px;
+}
+.left_content{
+    background-color: red;
+    height:900px;
+}
+.right_content{
+    background-color: blue;
+    height:900px;
+}
+.bottom_footer{
+    background-color: yellow;
+}

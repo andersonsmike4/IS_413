@@ -1,10 +1,11 @@
 <%inherit file="base.htm" />
 
-<%block name="menu">
-##put navbar here login in base
-    <div class="content">
-        <h3>Congratulations -- you've successfully created a new django-mako-plus app!</h3>
-        <h4>Next Up: Go through the django-mako-plus tutorial and add Javascript, CSS, and urlparams to this page.</h4>
-        <h4 class="utc-time">Current time in UTC: ${ utc_time }</h4>
-    </div>
+##put navbar here, login in base
+<%block name="navbar_links">
+    <li class="${ 'active' if request.dmp_router_page == 'index' else ''}"><a href="/">Home</a></li>
+    <li class="${ 'active' if request.dmp_router_page == 'about' else ''}"><a href="/about/">About</a></li>
+    <li class="${ 'active' if request.dmp_router_page == 'contact' else ''}"><a href="/contact/">Contact</a></li>
+    <li class="${ 'active' if request.dmp_router_page == 'sections' else ''}"><a href="/sections/">Sections</a></li>
+    <li class="${ 'active' if request.dmp_router_page == 'faq' else ''}"><a href="/faq/">FAQ</a></li>
+    <li class="${ 'active' if request.dmp_router_page == 'terms' else ''}"><a href="/terms/">Terms</a></li>
 </%block>
