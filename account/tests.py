@@ -50,9 +50,10 @@ class UserClassTest(TestCase):
 
         # prints out all available test_groups_permissions
         # for p in Permission.objects.all():
-        #     print(p.codename)
-        #     print(p.name)
-        #     print(p.content_type)
+        #     print('Codename: ' + p.codename)
+        #     print('Name: ' + p.name)
+        #     print('ContentType: ' + str(p.content_type))
+        #     this is a pretty bad idea: self.u1.user_permissions.add(p)
 
         # create a permission
         p = Permission()
@@ -96,7 +97,7 @@ class UserClassTest(TestCase):
     def test_login(self):
         '''Test login'''
         c = Client()
-        a = c.login(username = self.u1.email, password = 'password')
+        a = c.login(email = self.u1.email, password = 'password')
         self.assertTrue(a)
         u = auth.get_user(c)
 
@@ -107,7 +108,7 @@ class UserClassTest(TestCase):
         '''Test logout'''
         c = Client()
         # login in first
-        a = c.login(username = self.u1.email, password = 'password')
+        a = c.login(email = self.u1.email, password = 'password')
         self.assertTrue(a)
         u = auth.get_user(c)
 
