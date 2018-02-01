@@ -120,8 +120,12 @@ class UserClassTest(TestCase):
         self.assertTrue(u.is_anonymous)
 
     def test_password(self):
-        
+        u2 = amod.User.objects.get(email = 'lisa@simpsons.com')
+        # check to see if the passwords are the same
+        self.assertEqual(self.u1.password, u2.password)
+
+        self.assertTrue(u2.check_password('password'))
 
 
 
-    def test_field_change(self):
+    # def test_field_change(self):
