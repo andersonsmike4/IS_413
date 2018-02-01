@@ -6,8 +6,15 @@ from django.contrib import auth
 
 # Create your tests here.
 class UserClassTest(TestCase):
+
+    # use this to create a user that can be used for every class
+    fixtures = ['data.yaml']
+
     def setUp(self):
-        # this runs beofre each function
+        # use this line to get the user from the fixtures file
+        # self.u1 = amod.User.objects.get(email='homer@simpson.com')
+
+        # this runs before each function
         self.u1 = amod.User()
         self.u1.first_name = 'Lisa'
         self.u1.last_name = 'Simpson'
@@ -23,8 +30,6 @@ class UserClassTest(TestCase):
 
     def test_load_save(self):
         '''Test creating, saving, and reloading a user'''
-
-
         u2 = amod.User.objects.get(email = 'lisa@simpsons.com')
         self.assertEqual(self.u1.first_name, u2.first_name)
         self.assertEqual(self.u1.last_name, u2.last_name)
@@ -38,7 +43,6 @@ class UserClassTest(TestCase):
         g1.name = 'Salespeople'
         # you must save before you add test_groups_permissions
         g1.save()
-
         g1.permissions.add(Permission.objects.get(id=1))
 
         # prints out all available test_groups_permissions
@@ -115,4 +119,9 @@ class UserClassTest(TestCase):
         self.assertFalse(u.is_authenticated)
         self.assertTrue(u.is_anonymous)
 
-    
+    def test_password(self):
+        
+
+
+
+    def test_field_change(self):
