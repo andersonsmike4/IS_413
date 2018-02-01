@@ -24,7 +24,6 @@ class UserClassTest(TestCase):
         self.u1.city = 'Springfield'
         self.u1.state = 'State'
         self.u1.zipcode = '12345'
-        self.u1.birthdate = '2018-01-30'
         self.u1.save()
 
 
@@ -35,6 +34,10 @@ class UserClassTest(TestCase):
         self.assertEqual(self.u1.last_name, u2.last_name)
         self.assertEqual(self.u1.email, u2.email)
         self.assertEqual(self.u1.password, u2.password)
+        self.assertEqual(self.u1.address, u2.address)
+        self.assertEqual(self.u1.city, u2.city)
+        self.assertEqual(self.u1.state, u2.state)
+        self.assertEqual(self.u1.zipcode, u2.zipcode)
         self.assertTrue(u2.check_password('password'))
 
     def test_groups_permissions(self):
@@ -128,4 +131,27 @@ class UserClassTest(TestCase):
 
 
 
-    # def test_field_change(self):
+    def test_field_change(self):
+        # change the fields and save to the db
+        self.u1 = amod.User()
+        self.u1.first_name = 'Bob'
+        self.u1.last_name = 'Smith'
+        self.u1.email = 'bob@smith.com'
+        self.u1.set_password('password')
+        self.u1.address = '198 Fake Rd'
+        self.u1.city = 'Salem'
+        self.u1.state = 'Montana'
+        self.u1.zipcode = '98765'
+        self.u1.save()
+
+        # check to make sure it was updated in the database
+        u2 = amod.User.objects.get(id=self.u1.id)
+        self.assertEqual(self.u1.first_name, u2.first_name)
+        self.assertEqual(self.u1.last_name, u2.last_name)
+        self.assertEqual(self.u1.email, u2.email)
+        self.assertEqual(self.u1.password, u2.password)
+        self.assertEqual(self.u1.address, u2.address)
+        self.assertEqual(self.u1.city, u2.city)
+        self.assertEqual(self.u1.state, u2.state)
+        self.assertEqual(self.u1.zipcode, u2.zipcode)
+        self.assertTrue(u2.check_password('password'))
