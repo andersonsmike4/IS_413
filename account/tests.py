@@ -65,9 +65,12 @@ class UserClassTest(TestCase):
         # add permission to groups
         g1.permissions.add(Permission.objects.get(codename='change_product_price'))
         g1.save()
+
+        # add user to group
         self.u1.groups.add(g1)
         self.u1.save()
 
+        # check to see if the group has the new permissions
         self.assertTrue(self.u1.groups.filter(name = 'Salespeople'))
         self.assertTrue(self.u1.has_perm('admin.change_product_price'))
 
@@ -92,7 +95,6 @@ class UserClassTest(TestCase):
 
         self.assertTrue(self.u1.has_perm('admin.change_product_price'))
         self.assertTrue(self.u1.has_perm('admin.change_product_name'))
-
 
     def test_login(self):
         '''Test login'''
@@ -130,15 +132,12 @@ class UserClassTest(TestCase):
 
         self.assertTrue(u2.check_password('password'))
 
-
-
     def test_field_change(self):
-        # change the fields and save to the db
-        u2 = amod.User.objects.get(id=self.u1.id)
-        u2.first_name = 'Bob'
-        u2.last_name = 'Smith'
-        u2.email = 'bob@smith.com'
-        u2.save()
+        # change the fields in u1 and save to the db
+        self.u1.first_name = 'Bob'
+        self.u1.last_name = 'Smith'
+        self.u1.email = 'bob@smith.com'
+        self.u1.save()
 
         # check to make sure it was updated in the database
         u2 = amod.User.objects.get(id=self.u1.id)
