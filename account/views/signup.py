@@ -49,17 +49,17 @@ class SignupForm(Formless):
         # return password if it is correct
         return p1
 
-#     def clean_email(self):
-#         new_user = self.cleaned_data.get('email')
-#
-#         # check to see if email exists in the database
-#         u1 = amod.User.objects.get(email=new_user)
-#         if new_user == u1.email:
-#             raise forms.ValidationError('Email must be unique.')
-#
-#         return new_user
-#
-#
+    def clean_email(self):
+        new_user = self.cleaned_data.get('email')
+
+        # check to see if email exists in the database
+        u1 = amod.User.objects.get(email=new_user)
+        if new_user == u1.email:
+            raise forms.ValidationError('Email must be unique.')
+
+        return new_user
+
+
 #     def clean(self):
 #         p1 = self.cleaned_data.get('password')
 #         p2 = self.cleaned_data.get('password2')
