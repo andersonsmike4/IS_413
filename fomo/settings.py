@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'django_mako_plus',
     'cuser',
     'homepage',
+    'formlib',
     'account',
-    # 'formlib',
 ]
 
 MIDDLEWARE = [
