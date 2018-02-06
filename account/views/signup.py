@@ -60,13 +60,13 @@ class SignupForm(Formless):
         return new_user
 
 
-#     def clean(self):
-#         p1 = self.cleaned_data.get('password')
-#         p2 = self.cleaned_data.get('password2')
-#
-#         # check to see if the passwords don't match
-#         if p1 != p2:
-#             raise forms.ValidationError('Passwords must match')
-#
-#         # return if passwords match
-#         return self.cleaned_data
+    def clean(self):
+        p1 = self.cleaned_data.get('password')
+        p2 = self.cleaned_data.get('password2')
+
+        # check to see if the passwords don't match
+        if p1 != p2:
+            raise forms.ValidationError('Passwords must match')
+
+        # return if passwords match
+        return self.cleaned_data
