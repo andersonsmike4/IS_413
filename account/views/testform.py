@@ -23,10 +23,11 @@ def process_request(request):
 class TestForm(forms.Form):
     favorite_ice_cream = forms.CharField(label='Favorite Ice Cream')
     renewal_date = forms.DateField(label='Renewal', help_text="Enter a date between now and 4 weeks (default 3).")
+    age = forms.IntegerField(label='Age')
     options = [
         'Choice 1',
         'Choice 2',
         'Choice 3',
     ]
     # this is not working
-    drop_down = forms.ChoiceField(label='Choices', widget=forms.Select(choices=options))
+    # drop_down = forms.ChoiceField(label='Choices', widget=forms.Select(choices=options))
