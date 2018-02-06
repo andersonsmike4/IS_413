@@ -25,30 +25,30 @@ class SignupForm(Formless):
         self.fields['password'] = forms.CharField(label='Enter Password', widget=forms.PasswordInput(), required=True)
         self.fields['password2'] = forms.CharField(label='Verify Password', widget=forms.PasswordInput(), required=True)
 
-#     def clean_password(self):
-#         p1 = self.cleaned_data.get('password')
-#
-#         not_eight = False
-#         no_number = False
-#
-#         # determine if the passwords are valid
-#         if len(p1) < 8:
-#             not_eight = True
-#
-#         if re.search('[0-9]', p1) is None:
-#             no_number = True
-#
-#         # throw exceptions for a password that does not have 8 or more characters and a number
-#         if not_eight == True & no_number == True:
-#             raise forms.ValidationError('Password must have 8 or more characters and contian a number.')
-#         if not_eight == True:
-#             raise forms.ValidationError('Password must contain 8 or more characters.')
-#         elif no_number == True:
-#             raise forms.ValidationError('Password must contain a number.')
-#
-#         # return password if it is correct
-#         return p1
-#
+    def clean_password(self):
+        p1 = self.cleaned_data.get('password')
+
+        not_eight = False
+        no_number = False
+
+        # determine if the passwords are valid
+        if len(p1) < 8:
+            not_eight = True
+
+        if re.search('[0-9]', p1) is None:
+            no_number = True
+
+        # throw exceptions for a password that does not have 8 or more characters and a number
+        if not_eight == True & no_number == True:
+            raise forms.ValidationError('Password must have 8 or more characters and contian a number.')
+        if not_eight == True:
+            raise forms.ValidationError('Password must contain 8 or more characters.')
+        elif no_number == True:
+            raise forms.ValidationError('Password must contain a number.')
+
+        # return password if it is correct
+        return p1
+
 #     def clean_email(self):
 #         new_user = self.cleaned_data.get('email')
 #
