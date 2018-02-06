@@ -18,13 +18,13 @@ def process_request(request):
     }
     return request.dmp_render('signup.html', context)
 
-# class SignupForm(Formless):
-#     def init(self):
-#         # create fields
-#         self.fields['email'] = forms.EmailField(label='Enter Email', required=True)
-#         self.fields['password'] = forms.CharField(label='Enter Password', widget=forms.PasswordInput(), required=True)
-#         self.fields['password2'] = forms.CharField(label='Verify Password', widget=forms.PasswordInput(), required=True)
-#
+class SignupForm(Formless):
+    def init(self):
+        # create fields
+        self.fields['email'] = forms.EmailField(label='Enter Email', required=True)
+        self.fields['password'] = forms.CharField(label='Enter Password', widget=forms.PasswordInput(), required=True)
+        self.fields['password2'] = forms.CharField(label='Verify Password', widget=forms.PasswordInput(), required=True)
+
 #     def clean_password(self):
 #         p1 = self.cleaned_data.get('password')
 #
