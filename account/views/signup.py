@@ -56,8 +56,8 @@ class SignupForm(Formless):
         new_user = self.cleaned_data.get('email')
 
         # check to see if email exists in the database
-        u1 = amod.User.objects.get(email=new_user)
-        if new_user == u1.email:
+        u1 = amod.User.objects.filter(email=new_user).exists()
+        if u1 == True:
             raise forms.ValidationError('Email must be unique.')
 
         return new_user
@@ -83,9 +83,10 @@ class SignupForm(Formless):
         new_user.first_name = self.cleaned_data.get('first_name')
         new_user.last_name = self.cleaned_data.get('last_name')
         new_user.email = self.cleaned_data.get('email')
-        new_user.set_password(self.cleaned_data.get('password')
+        new_user.set_password(self.cleaned_data.get('password'))
 
         # save the user info to the data base
         new_user.save()
 
         # authenticate and log in user
+        
