@@ -21,3 +21,7 @@ class LoginForm(Formless):
         # create fields
         self.fields['email'] = forms.EmailField(label='Enter Email', required=True)
         self.fields['password'] = forms.CharField(label='Enter Password', widget=forms.PasswordInput(), required=True)
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
