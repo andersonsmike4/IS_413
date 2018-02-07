@@ -12,6 +12,7 @@ def process_request(request):
     signup_form = SignupForm(request)
 
     if signup_form.is_valid():
+        signup_form.commit()
         return HttpResponseRedirect('/account/index/')
     context = {
         'signup_form': signup_form,
@@ -21,9 +22,11 @@ def process_request(request):
 class SignupForm(Formless):
     def init(self):
         # create fields
-        self.fields['email'] = forms.EmailField(label='Enter Email', required=True)
-        self.fields['password'] = forms.CharField(label='Enter Password', widget=forms.PasswordInput(), required=True)
-        self.fields['password2'] = forms.CharField(label='Verify Password', widget=forms.PasswordInput(), required=True)
+        self.fields['first_name'] = forms.CharField(label='Enter First Name:', required=True)
+        self.fields['last_name'] = forms.CharField(label='Enter Last Name:', required=True)
+        self.fields['email'] = forms.EmailField(label='Enter Email:', required=True)
+        self.fields['password'] = forms.CharField(label='Enter Password:', widget=forms.PasswordInput(), required=True)
+        self.fields['password2'] = forms.CharField(label='Verify Password:', widget=forms.PasswordInput(), required=True)
 
     def clean_password(self):
         p1 = self.cleaned_data.get('password')
@@ -61,6 +64,7 @@ class SignupForm(Formless):
 
 
     def clean(self):
+        # grab the passwords
         p1 = self.cleaned_data.get('password')
         p2 = self.cleaned_data.get('password2')
 
@@ -70,3 +74,18 @@ class SignupForm(Formless):
 
         # return if passwords match
         return self.cleaned_data
+
+    def commit(self):
+        '''Save the user to the database'''
+
+        # get user info
+        new_user = amod.User()
+        new_user.first_name = self.cleaned_data.get('first_name')
+        new_user.last_name = self.cleaned_data.get('last_name')
+        new_user.email = self.cleaned_data.get('email')
+        new_user.set_password(self.cleaned_data.get('password')
+
+        # save the user info to the data base
+        new_user.save()
+
+        # authenticate and log in user
