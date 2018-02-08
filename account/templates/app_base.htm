@@ -1,11 +1,5 @@
 <%inherit file="/homepage/templates/base.htm" />
 
-
-<%
-
-
-%>
-
 <%block name="navbar_links">
     <li class="${ 'active' if request.dmp_router_page == 'index' else ''}"><a href="/">Home</a></li>
     <li class="${ 'active' if request.dmp_router_page == 'about' else ''}"><a href="/about/">About</a></li>
@@ -16,19 +10,17 @@
 </%block>
 
 <%block name='navbar_right_links'>
-    <li "${ 'hidden' if request.user.is_authenticated == True else ''}"><a href="/account/signup/">Sign Up</a></li>
-    <li><a href="/account/login/">Login</a></li>
-</%block>
-
-<%doc>
-    original
+    %if request.user.is_authenticated:
         <li class="dropdown">
-            <a href="/account/login/" class="dropdown-toggle" data-toggle="dropdown" role="button">Login<span class="caret"></span></a>
+            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button">${ user.email }<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Account</a></li>
-              <li><a href="#">Orders</a></li>
+              <li><a href="/account/index/">My Account</a></li>
               <li role="separator" class="divider"></li>
               <li><a href="/account/logout/">Log out</a></li>
             </ul>
         </li>
-</%doc>
+    %else:
+        <li><a href="/account/signup/">Sign Up</a></li>
+        <li><a href="/account/login/">Login</a></li>
+    %endif
+</%block>
