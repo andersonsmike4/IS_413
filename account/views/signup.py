@@ -4,6 +4,7 @@ from django_mako_plus import view_function
 from formlib import Formless
 from django import forms
 from account import models as amod
+from django.contrib.auth import authenticate, login
 import re
 
 @view_function
@@ -89,4 +90,10 @@ class SignupForm(Formless):
         new_user.save()
 
         # authenticate and log in user
-        
+        self.user = authenticate(email=self.cleaned_data.get('email'), password=self.cleaned_data.get('password'))
+
+        if self.user is None:
+            raise forms.ValidationError('Invalid email or password.')
+
+        # login user
+        login(self.request, self.user)

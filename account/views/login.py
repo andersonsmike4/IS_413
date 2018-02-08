@@ -12,6 +12,7 @@ def process_request(request):
     login_form = LoginForm(request)
 
     if login_form.is_valid():
+        login_form.commit()
         return HttpResponseRedirect('/account/index/')
     context = {
         'login_form': login_form,
@@ -29,6 +30,7 @@ class LoginForm(Formless):
         self.user = authenticate(email=self.cleaned_data.get('email'), password=self.cleaned_data.get('password'))
         if self.user is None:
             raise forms.ValidationError('Invalid email or password.')
+
         # return cleaned_data dictionary
         return self.cleaned_data
 
