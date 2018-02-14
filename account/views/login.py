@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login
 
 @view_function
 def process_request(request):
-    # call constructor and assign to form
+    '''call constructor and assign to form'''
     login_form = LoginForm(request)
 
     if login_form.is_valid():
@@ -21,7 +21,7 @@ def process_request(request):
 
 class LoginForm(Formless):
     def init(self):
-        # create fields
+        '''create fields'''
         self.fields['email'] = forms.EmailField(label='Enter Email', required=True)
         self.fields['password'] = forms.CharField(label='Enter Password', widget=forms.PasswordInput(), required=True)
         self.user = None
