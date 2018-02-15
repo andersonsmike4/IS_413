@@ -3,7 +3,7 @@ from polymorphic.models import PolymorphicModel
 
 # Create your models here.
 class Category(models.Model):
-    # attributes for category
+    '''Product categories'''
     name = models.TextField()
     description = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True)
@@ -13,13 +13,13 @@ class Product(PolymorphicModel):
     '''a bulk, ind, or rental product'''
     # These are the common attributes of all products
 
-    # TYPE_CHOICES = (
-    #     ('BulkProduct', 'Bulk Product' )
-    #     ('IndividualProduct', 'Individual Product' )
-    #     ('RentalProduct', 'Rental Product' )
-    # )
+    TYPE_CHOICES = (
+        ('BulkProduct', 'Bulk Product' ),
+        ('IndividualProduct', 'Individual Product' ),
+        ('RentalProduct', 'Rental Product' )
+    )
 
-    STATUS = (
+    STATUS_CHOICES = (
       ( 'A', 'Active' ),
       ( 'I', 'Inactive' )
     )
@@ -28,7 +28,7 @@ class Product(PolymorphicModel):
     description = models.TextField()
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=7, decimal_places=2)
-    status = models.TextField(choices=STATUS, default='A')
+    status = models.TextField(choices=STATUS_CHOICES, default='A')
     create_date = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
@@ -49,4 +49,4 @@ class RentalProduct(Product):
     TITLE = 'Rental'
     pid = models.TextField()
     max_rental_days = models.IntegerField(default=0)
-    retire_date = models.DateTimeField()
+    retire_date = models.DateTimeField(null=True, blank=True)
