@@ -1,3 +1,8 @@
-/* h4.utc-time {
-    color: #AA3333;
-} */ 
+.jumbotron{
+    background-image: url('../media/images/music_jumbo.jpg');
+    background-size: cover;
+    height: 600px;
+    color: white;
+    font-family: Verdana;
+    font-weight: bold;
+}

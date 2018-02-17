@@ -8,4 +8,4 @@ from django.contrib.auth import logout
 @view_function
 def process_request(request):
     logout(request)
-    return HttpResponseRedirect('/account/index/')
+    return HttpResponseRedirect('/homepage/index/')

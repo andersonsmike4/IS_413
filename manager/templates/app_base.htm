@@ -1,12 +1,9 @@
 <%inherit file="/homepage/templates/base.htm" />
 
 <%block name="navbar_links">
-    <li class="${ 'active' if request.dmp_router_page == 'index' else ''}"><a href="/">Home</a></li>
-    <li class="${ 'active' if request.dmp_router_page == 'about' else ''}"><a href="/about/">About</a></li>
-    <li class="${ 'active' if request.dmp_router_page == 'contact' else ''}"><a href="/contact/">Contact</a></li>
-    <li class="${ 'active' if request.dmp_router_page == 'sections' else ''}"><a href="/sections/">Sections</a></li>
-    <li class="${ 'active' if request.dmp_router_page == 'faq' else ''}"><a href="/faq/">FAQ</a></li>
-    <li class="${ 'active' if request.dmp_router_page == 'terms' else ''}"><a href="/terms/">Terms</a></li>
+    <li><a href="/homepage/index/">Home</a></li>
+    <li class="${ 'active' if request.dmp_router_page == 'index' else ''}"><a href="/manager/index/">Manager</a></li>
+    <li class="${ 'active' if request.dmp_router_page == 'product_list' else ''}"><a href="/manager/product_list/">Products</a></li>
 </%block>
 
 <%block name='navbar_right_links'>
