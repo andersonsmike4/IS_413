@@ -8,6 +8,8 @@ class Category(models.Model):
     description = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.name
 
 class Product(PolymorphicModel):
     '''a bulk, ind, or rental product'''
