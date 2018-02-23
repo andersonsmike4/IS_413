@@ -30,7 +30,7 @@ class CreateForm(Formless):
         '''Adds the fields for product form'''
         self.fields['status'] = forms.ChoiceField(label='Status:', required=True, choices=cmod.Product.STATUS_CHOICES)
         # widget=forms.RadioSelect(),
-        self.fields['type'] = forms.ChoiceField(label='Type', required=True, choices=cmod.Product.TYPE_CHOICES, help_text='Select Product Type')
+        self.fields['type'] = forms.ChoiceField(label='Type', required=True, choices=cmod.Product.TYPE_CHOICES)
         self.fields['name'] = forms.CharField(label='Product Name:', required=True)
         self.fields['description'] = forms.CharField(label='Product Description:', required=True, widget=forms.Textarea)
         self.fields['price'] = forms.DecimalField(label='Price:', required=True, max_digits=7, decimal_places=2)

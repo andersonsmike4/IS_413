@@ -6,20 +6,22 @@ from catalog import models as cmod
 
 @view_function
 def process_request(request, product: cmod.Product):
-    # try:
-    #     product = cmod.Product.objects.get(pk=request.urlparams[0])
-    # except:
-    #     pass
 
-    # initial=forms.model_to_dict(product)
+
+    # not using this anymore
     # initial={'name':product.name, 'description':product.description, 'category': product.category.name}
     # process the form
-    if product.__class__.__name__ == 'BulkProduct':
-        edit_form = EditForm(request, initial={'name':product.name, 'description':product.description, 'category': product.category, 'type': product.__class__.__name__, 'status':product.status, 'price':product.price, 'quantity': product.quantity, 'reorder_trigger': product.reorder_trigger, 'reorder_quantity': product.reorder_quantity})
-    if product.__class__.__name__ == 'IndividualProduct':
-        edit_form = EditForm(request, initial={'name':product.name, 'description':product.description, 'category': product.category, 'type': product.__class__.__name__, 'status':product.status, 'price':product.price, 'pid': product.pid})
-    if product.__class__.__name__ == 'RentalProduct':
-        edit_form = EditForm(request, initial={'name':product.name, 'description':product.description, 'category': product.category, 'type': product.__class__.__name__, 'status':product.status, 'price':product.price, 'pid': product.pid, 'max_rental_days': product.max_rental_days, 'retire_date': product.retire_date})
+    # if product.__class__.__name__ == 'BulkProduct':
+    #     edit_form = EditForm(request, initial={'name':product.name, 'description':product.description, 'category': product.category, 'type': product.__class__.__name__, 'status':product.status, 'price':product.price, 'quantity': product.quantity, 'reorder_trigger': product.reorder_trigger, 'reorder_quantity': product.reorder_quantity})
+    # if product.__class__.__name__ == 'IndividualProduct':
+    #     edit_form = EditForm(request, initial={'name':product.name, 'description':product.description, 'category': product.category, 'type': product.__class__.__name__, 'status':product.status, 'price':product.price, 'pid': product.pid})
+    # if product.__class__.__name__ == 'RentalProduct':
+    #     edit_form = EditForm(request, initial={'name':product.name, 'description':product.description, 'category': product.category, 'type': product.__class__.__name__, 'status':product.status, 'price':product.price, 'pid': product.pid, 'max_rental_days': product.max_rental_days, 'retire_date': product.retire_date})
+
+    # get the initial data
+    initial_data=forms.model_to_dict(product)
+    initial_data.update({'type': product.__class__.__name__})
+    edit_form = EditForm(request, initial=initial_data)
 
     if edit_form.is_valid():
         edit_form.commit(request, product)
