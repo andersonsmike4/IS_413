@@ -21,6 +21,7 @@
                     <td>${ p.name }</td>
                     <td>$${ p.price }</td>
                     % if p.TITLE == 'Bulk':
+                    ##%if hasattr(p, 'quantity'):
                         <td>${ p.quantity }</td>
                     % else:
                         <td>1</td>

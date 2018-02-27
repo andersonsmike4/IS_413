@@ -28,7 +28,7 @@ def process_request(request, product: cmod.Product):
         return HttpResponseRedirect('/manager/product_list/')
 
     # render the template
-    return request.dmp_render('edit_product.html', {
+    return request.dmp.render('edit_product.html', {
         'edit_form': edit_form,
     })
 

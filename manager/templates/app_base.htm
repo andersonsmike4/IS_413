@@ -2,8 +2,8 @@
 
 <%block name="navbar_links">
     <li><a href="/homepage/index/">Home</a></li>
-    <li class="${ 'active' if request.dmp_router_page == 'index' else ''}"><a href="/manager/index/">Manager</a></li>
-    <li class="${ 'active' if request.dmp_router_page == 'product_list' else ''}"><a href="/manager/product_list/">Products</a></li>
+    <li class="${ 'active' if request.dmp.page == 'index' else ''}"><a href="/manager/index/">Manager</a></li>
+    <li class="${ 'active' if request.dmp.page == 'product_list' else ''}"><a href="/manager/product_list/">Products</a></li>
 </%block>
 
 <%block name='navbar_right_links'>

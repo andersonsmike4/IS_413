@@ -19,7 +19,7 @@ def process_request(request):
         return HttpResponseRedirect('/manager/product_list/')
 
     # render the template
-    return request.dmp_render('create_product.html', {
+    return request.dmp.render('create_product.html', {
         'create_form': create_form,
     })
 

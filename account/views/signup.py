@@ -18,7 +18,7 @@ def process_request(request):
     context = {
         'signup_form': signup_form,
     }
-    return request.dmp_render('signup.html', context)
+    return request.dmp.render('signup.html', context)
 
 class SignupForm(Formless):
     def init(self):
