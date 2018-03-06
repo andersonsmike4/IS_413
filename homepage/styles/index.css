@@ -1,8 +1,29 @@
+.top_font{
+    font-size: 18pt;
+    text-align: center;
+}
+.middle_font
+{
+    font-size: 18pt;
+}
+
 .jumbotron{
-    background-image: url('../media/images/music_jumbo.jpg');
+    background-image: url('../media/images/jumbotron1.jpg');
     background-size: cover;
     height: 600px;
     color: white;
-    font-family: Verdana;
+    font-family: Helvetica;
     font-weight: bold;
+}
+.right_jumbo{
+    text-align: left;
+}
+
+.lead{
+    font-style: italic;
+}
+
+.jumbo_button{
+    position: relative;
+    text-align: center;
 }

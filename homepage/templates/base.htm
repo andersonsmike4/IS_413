@@ -22,6 +22,7 @@
 
     </head>
     <body>
+        <a id="skip_to_main" href="#middle_content">Skip To Main Content</a>
         <header>
             <div class="maintenance_header">
                 <p class="maintenance_p">Please be advised that the site may be slow due to heavy traffic!</p>
@@ -36,7 +37,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="/"><img class="navbar-left img-responsive image  icon_image" src="${STATIC_URL}homepage/media/images/music_icon.png" /> Family Oriented Music Organization</a>
+                  <a class="navbar-brand" href="/"><img class="navbar-left img-responsive image  icon_image" src="${STATIC_URL}homepage/media/images/music_icon.png" alt="FOMO" /> Family Oriented Music Organization</a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -54,9 +55,13 @@
 
         <main>
             <div class="container-fluid">
+                <%block name="jumbo">
+
+                </%block>
+
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
-                        <div class="top_content">
+                        <div id="top_content">
                             <%block name="top_content">
 
                             </%block>
@@ -66,21 +71,21 @@
                 <div class="row">
                     <div class="content">
                         <div class="col-sm-3 col-md-3 col-lg-3">
-                            <div class="left_content">
+                            <div id="left_content">
                                 <%block name="left_content">
 
                                 </%block>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-6 col-lg-6">
-                            <div class="middle_content">
+                            <div id="middle_content">
                                 <%block name="middle_content">
 
                                 </%block>
                             </div>
                         </div>
                         <div class="col-sm-3 col-md-3 col-lg-3">
-                            <div class="right_content">
+                            <div id="right_content">
                                 <%block name="right_content">
 
                                 </%block>

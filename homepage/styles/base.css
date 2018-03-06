@@ -20,6 +20,10 @@ main {
     margin: 0;
     padding: 15px;
 } */
+
+#skip_to_main{
+    display: none;
+}
 .maintenance_header{
     background-color: red;
     color: white;
@@ -42,7 +46,11 @@ body{
 
 .dropdown-menu{
     background-color: black;
+    color: white;
 }
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+            color: black;
+ }
 .bottom_footer{
     text-align: center;
     margin-top: 15px;
