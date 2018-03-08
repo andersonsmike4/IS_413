@@ -23,7 +23,7 @@ $(function()
             $('.Rental').closest('p').show(400)
             $('.Bulk').closest('p').hide(400)
         }
-        else if (choice.val() == 'RentalProduct')
+        else if (choice.val() == 'BulkProduct')
         {
             $('#id_pid').closest('p').hide(400)
             $('.Rental').closest('p').hide(400)
