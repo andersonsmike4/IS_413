@@ -62,3 +62,11 @@ body{
 .form-control{
     color: black;
 }
+
+.navbar-inverse{
+    border-radius: 0px;
+}
+
+.navbar{
+    margin-bottom: -1px;
+}

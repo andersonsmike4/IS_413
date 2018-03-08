@@ -70,26 +70,31 @@
                 </div>
                 <div class="row">
                     <div class="content">
-                        <div class="col-sm-3 col-md-3 col-lg-3">
-                            <div id="left_content">
-                                <%block name="left_content">
+                        <div id="left_content" class="col-sm-3 col-md-3 col-lg-3">
+                            <%block name="left_content">
 
-                                </%block>
-                            </div>
+                            </%block>
                         </div>
-                        <div class="col-sm-6 col-md-6 col-lg-6">
-                            <div id="middle_content">
-                                <%block name="middle_content">
+                        <div id="middle_content" class="col-sm-6 col-md-6 col-lg-6">
 
-                                </%block>
-                            </div>
+                            <%block name="middle_content">
+
+                            </%block>
+
                         </div>
-                        <div class="col-sm-3 col-md-3 col-lg-3">
-                            <div id="right_content">
-                                <%block name="right_content">
+                        <div id="middle_right_content" class="col-sm-9 col-md-9 col-lg-9">
 
-                                </%block>
-                            </div>
+                            <%block name="middle_right_content">
+
+                            </%block>
+
+                        </div>
+                        <div id="right_content" class="col-sm-3 col-md-3 col-lg-3">
+
+                            <%block name="right_content">
+
+                            </%block>
+
                         </div>
                     </div>
                 </div>
