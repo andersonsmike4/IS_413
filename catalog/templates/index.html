@@ -1,9 +1,29 @@
-<%inherit file="base.htm" />
+<%inherit file="app_base.htm" />
 
-<%block name="content">
-    <div class="content">
-        <h3>Congratulations -- you've successfully created a new django-mako-plus app!</h3>
-        <h4>Next Up: Go through the django-mako-plus tutorial and add Javascript, CSS, and urlparams to this page.</h4>
-        <h4 class="utc-time">Current time in UTC: ${ utc_time }</h4>
+<%block name="left_content">
+    <ul id=category_list>
+        <li><a class="${ 'selected' if category is None else 'not_selected'}" href='/catalog/index/'>All Products</a></li>
+        % for c in categories:
+            <li ><a class="${ 'selected' if category == c else 'not_selected'}" href='/catalog/index/${ c.id }'>${ c.name }</a></li>
+        % endfor
+    </ul>
+</%block>
+
+
+
+<%block name="middle_right_content">
+
+    <h1 class="product_h1">${ 'Products' if category is None else category.name }</h1>
+
+
+    <div id='paginator' class="text-right">
+        <a id="previous_page" ><span class="glyphicon glyphicon-arrow-left"></span></a>Page <span id="current_page">1</span> of ${ total_pages }<a id="next_page"><span class="glyphicon glyphicon-arrow-right"></span></a>
     </div>
+
+
+
+    <div id='products'>
+
+    </div>
+
 </%block>
