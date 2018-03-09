@@ -8,20 +8,21 @@ import math
 def process_request(request, category: cmod.Category = None):
 
     categories = cmod.Category.objects.all()
-
+    id=0
     if category is None:
-        qry = cmod.Product.objects.all()
+        qry = cmod.Product.objects.filter(status='A')
     else:
-        qry = cmod.Product.objects.filter(category=category)
+        qry = cmod.Product.objects.filter(category=category, status='A')
+        id = category.id
 
-    pnum = math.ceil(qry.count()/6)
+    total_pages = math.ceil(qry.count()/6)
 
-    print('>>>>>>>>>>>>>>>' + str(pnum))
     context = {
         # sent to index.html:
         'categories': categories,
         'category': category,
-        'pnum':pnum
+        jscontext('categoryid'): id,
+        jscontext('total_pages'):total_pages,
         # sent to index.html and index.js:
         # jscontext(): ,
     }
@@ -29,11 +30,16 @@ def process_request(request, category: cmod.Category = None):
 
 @view_function
 def product(request, category: cmod.Category = None, pnum: int=1):
-    prod = cmod.Product.objects.filter(category=category)
-    products = cmod.Product.objects.all()
+
+    if category is None:
+        products = cmod.Product.objects.filter(status='A')
+    else:
+        products = cmod.Product.objects.filter(category=category, status='A')
+    last_number = pnum * 6
+    first_number = last_number - 6
+    products = products[first_number:last_number]
     context = {
         # sent to index.product.html:
-        'prod': prod,
         'products': products,
         'category': category,
         # sent to index.product.html and index.js:

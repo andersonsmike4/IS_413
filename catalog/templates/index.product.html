@@ -1,17 +1,24 @@
 <%inherit file='/homepage/templates/base_ajax.htm'/>
 
 <%block name="middle_right_content">
-    <h1>hello</h1>
     <ul id='catalog_tiles'>
 
-        %if category is None:
-            %for p in products:
-                <li><img src="${ p.image_url() }" alt="product_image">${ p.name }</li>
-            %endfor
-        %else:
-            %for p in prod:
-                <li><img src="${ p.image_url() }" alt="product_image">${ p.name }</li>
-            %endfor
-        %endif
+
+        %for p in products:
+        <li>
+            <div class="product_price">
+                $${ p.price }
+            </div>
+            <img class="img-responsive"src="${ p.image_url() }" alt="product_image">
+            <div class="product_name">
+                ${ p.name }
+            </div>
+            <div class="product_cat">
+                ${ p.category }
+            </div>
+        </li>
+        %endfor
+
+
     </ul>
 </%block>

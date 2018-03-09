@@ -13,11 +13,11 @@
 
 <%block name="middle_right_content">
 
-    <h1>${ 'Products' if category is None else category.name }</h1>
+    <h1 class="product_h1">${ 'Products' if category is None else category.name }</h1>
 
-    ## this still needs work
+
     <div id='paginator' class="text-right">
-        <a id="previous_page"></a>Page of ${ pnum }<a id="next_page"></a>
+        <a id="previous_page" ><span class="glyphicon glyphicon-arrow-left"></span></a>Page <span id="current_page">1</span> of ${ total_pages }<a id="next_page"><span class="glyphicon glyphicon-arrow-right"></span></a>
     </div>
 
 

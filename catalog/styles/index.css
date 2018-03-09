@@ -27,6 +27,31 @@
     color: green;
 }
 
+#previous_page{
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.product_h1{
+    margin-left: 25px;
+    color: #301a57;
+    font-size: 30pt;
+    text-decoration: underline overline;
+}
+
+#next_page{
+    margin-left: 5px;
+    cursor: pointer;
+    margin-right: 25px;
+}
+
+#paginator{
+    color: #301a57;
+    font-size: 18pt;
+}
+
+
+
 #left_content{
     /* background-color: #e9e9e9 ; */
     height: 100%;
@@ -40,7 +65,8 @@
 }
 
 #products{
-    border-style: inset;
+    border-style: outset;
     background-color:#efefef;
-    margin: 75px 25px 10px;
+    margin: 25px 25px 10px;
+    padding: 20px;
 }

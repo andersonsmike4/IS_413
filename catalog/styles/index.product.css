@@ -1,0 +1,46 @@
+#catalog_tiles{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+#catalog_tiles > li{
+    display: inline-block;
+    margin: 15px 8px 15px;
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: 10px;
+    position: relative;
+    background-color: white;
+    max-width: 295px;
+    max-height: 375px;
+    vertical-align: top;
+}
+
+#catalog_tiles > li > .product_price{
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 3px;
+    background-color: springgreen;
+    font-size: 16pt;
+}
+
+#catalog_tiles > li > .product_name{
+    margin-top: 10px;
+    padding-top: 10px;
+    text-align: center;
+    color: #301a57;
+    font-size: 18pt;
+    display: block;
+    border-top: 1px solid black;
+}
+
+#catalog_tiles > li > .product_cat{
+    text-align: center;
+    color: #301a57;
+    font-size: 14pt;
+    display: block;
+}
