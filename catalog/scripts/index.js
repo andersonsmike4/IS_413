@@ -10,7 +10,7 @@ $(function (context) {
                 p_container.load('/catalog/index.product/' + context.categoryid + '/' + new_page)
             }
 
-            return False
+            // return False
         })
         $('#next_page').click(function(){
             if ($('#current_page').text() != context.total_pages)
@@ -20,7 +20,7 @@ $(function (context) {
                 p_container.load('/catalog/index.product/' + context.categoryid + '/' + new_page)
             }
 
-            return False
+            // return False
         })
     }
 }(DMP_CONTEXT.get()))

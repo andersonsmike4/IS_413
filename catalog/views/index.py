@@ -6,7 +6,7 @@ import math
 
 @view_function
 def process_request(request, category: cmod.Category = None):
-
+    
     categories = cmod.Category.objects.all()
     id=0
     if category is None:

@@ -9,8 +9,7 @@ $(function()
 
     // hide and show fields depending on type
     choice.on('change', function()
-    {
-        choice.val() == 'BulkProduct'
+    {    
         if (choice.val() == 'IndividualProduct')
         {
             $('#id_pid').closest('p').show(400)
