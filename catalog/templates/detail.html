@@ -1,0 +1,19 @@
+<%inherit file="app_base.htm" />
+
+<%block name="middle_content">
+    <h1 id="detail_h1">${ product.name }</h1>
+    <div class="product_images">
+        <ul id="thumbnails">
+            % for i in product.image_urls():
+                <li class=thumbnails_img><img class="img-responsive img-thumbnail" src="${ i }" alt="${ product.name }"></li>
+            % endfor
+        </ul>
+        <div id="big_image">
+            <img class="img-responsive img-thumbnail" src="${ product.image_url() }" alt="${ product.name } big image">
+        </div>
+    </div>
+    <p class="product_info">${ product.description }</p>
+
+
+
+</%block>

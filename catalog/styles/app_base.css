@@ -1,0 +1,29 @@
+.selected{
+    font-size: 24pt;
+    color: lightgreen;
+    text-decoration: underline;
+}
+
+.not_selected{
+    color: green;
+}
+
+#category_list{
+    list-style: none;
+    margin-top: 80px;
+    font-size: 20pt;
+    display: block;
+    /* padding-left: 0px; */
+}
+
+/* #category_list > li > a{
+    color: green;
+} */
+
+#category_list > li > a:hover {
+    color: #301a57;
+}
+
+/*#category_list > li > a:active{
+    color: red;
+} */

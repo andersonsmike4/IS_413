@@ -6,19 +6,17 @@
 
 #catalog_tiles > li{
     display: inline-block;
-    margin: 15px 10px 15px;
+    margin: 15px 11px 15px;
     padding: 0px;
     border: 2px solid black;
     border-radius: 10px;
     position: relative;
     background-color: white;
-
-
     vertical-align: top;
 }
-#catalog_tiles > li > img{
-    max-width: 285px;
-    max-height: 390px;
+#catalog_tiles > li > a > img{
+    max-width: 245px;
+    max-height: 340px;
     border-radius: 10px;
     border: none;
 }

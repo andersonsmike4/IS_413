@@ -1,0 +1,34 @@
+#thumbnails{
+    display: flex inline-block;
+    float: left;
+    list-style: none;
+}
+
+#thumbnails > li > img{
+    max-width: 80px;
+    max-height: 80px;
+    margin: 0px 8px 10px;
+}
+
+#big_image > img{
+    width: 400px;
+    height: 400px;
+    display: flex inline-block;
+    float: left;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#detail_h1{
+    margin: 30px 40px;
+    color: #301a57;
+    font-size: 30pt;
+    text-decoration: underline overline;
+}
+.product_info{
+    color: #301a57;
+    font-size: 12pt;
+    margin-left: 20px;
+    display: flex;
+    float: right;
+}

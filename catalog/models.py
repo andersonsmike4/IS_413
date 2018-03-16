@@ -15,7 +15,6 @@ class Category(models.Model):
 class Product(PolymorphicModel):
     '''a bulk, ind, or rental product'''
     # These are the common attributes of all products
-
     TYPE_CHOICES = (
         ('', '--Select Product Type--' ),
         ('BulkProduct', 'Bulk Product' ),
