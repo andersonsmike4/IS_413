@@ -27,17 +27,23 @@
     %endif
 </%block>
 
-<%
-    cat = None
-    p = ''
-    if request.dmp.page == 'index':
-        cat = cmod.Category.objects.filter(id = int(dmp_urlparams[0]))
-    elif request.dmp.page == 'detail':
-        p = cmod.Product.objects.get(id = int(dmp_urlparams[0]))
-        cat = int(p.category.id)
-%>
-
 <%block name="left_content">
+    <%
+        cat = None
+        p = ''
+        if request.dmp.page == 'index':
+            if request.dmp.urlparams[0] == '':
+                cat = None
+            else:
+                cat = cmod.Category.objects.filter(id = int(request.dmp.urlparams[0]))
+        elif request.dmp.page == 'detail':
+            p = cmod.Product.objects.get(id = int(request.dmp.urlparams[0]))
+            cat = p.category.id
+        print('>>>>>>>>>>>>>>>>>>>>>>> ', cat)
+
+        for c in cmod.Category.objects.all():
+            print(c)
+    %>
     <ul id=category_list>
         <li><a class="${ 'selected' if cat == None else 'not_selected'}" href='/catalog/index/'>All Products</a></li>
         % for c in cmod.Category.objects.all():

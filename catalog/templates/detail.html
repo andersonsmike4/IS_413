@@ -5,11 +5,11 @@
     <div class="product_images">
         <ul id="thumbnails">
             % for i in product.image_urls():
-                <li class=thumbnails_img><img class="img-responsive img-thumbnail" src="${ i }" alt="${ product.name }"></li>
+                <li><img class="img-responsive img-thumbnail thumbnails_img" src="${ i }" alt="${ product.name }"></li>
             % endfor
         </ul>
         <div id="big_image">
-            <img class="img-responsive img-thumbnail" src="${ product.image_url() }" alt="${ product.name } big image">
+            <img id='big_img' class="img-responsive img-thumbnail" src="${ product.image_url() }" alt="${ product.name } big image">
         </div>
     </div>
     <p class="product_info">${ product.description }</p>

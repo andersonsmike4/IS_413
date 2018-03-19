@@ -7,9 +7,11 @@ $(function()
     // hide and show fields depending on type
     thumbnail.on('mouseover', function()
     {
-
+        var srcimg = $(this).attr('src')
         // var src = $(this).attr('src')
-        console.log($(this).closest('img'))
-        // $(#big_image).attr('src', this.attr('src'))
+        console.log(srcimg)
+        $('#big_img').attr('src', srcimg)
+
+
     })
 })
