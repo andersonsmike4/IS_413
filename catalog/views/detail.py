@@ -22,6 +22,11 @@ def process_request(request, product: cmod.Product = None):
     # # if a GET (or any other method) we'll create a blank form
     # else:
     #     form = QuantityForm(initial={'quantity':product.quantity})
+    if product in request.last_five:
+        del request.last_five[request.last_five.index(product)]
+        
+    request.last_five.insert(0, product)
+
 
     context = {
         # sent to index.html:

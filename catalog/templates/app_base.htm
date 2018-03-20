@@ -48,3 +48,38 @@
         % endfor
     </ul>
 </%block>
+
+<%block name="right_content">
+    <p id="rec_viewed">Recently Viewed:</p>
+    <ol id="r_v_thumbnails">
+        % if request.dmp.page == 'index':
+            % for prod in request.last_five[0:5]:
+                <li>
+
+                    <a href="/catalog/detail/${ prod.id }"><img class="img-responsive img-thumbnail" src="${prod.image_url()}" alt="${ prod.name }"></a>
+                    <div class="product_name">
+                        (${ prod.name })
+                    </div>
+                </li>
+            % endfor
+        % endif
+        % if request.dmp.page == 'detail':
+            % for prod in request.last_five[1:6]:
+                <li>
+
+                    <a href="/catalog/detail/${ prod.id }"><img class="img-responsive img-thumbnail" src="${prod.image_url()}" alt="${ prod.name }"></a>
+                    <div class="product_name">
+                        (${ prod.name })
+                    </div>
+                </li>
+            % endfor
+        % endif
+    </ol>
+
+
+</%block>
+
+<a href="/catalog/detail/${ p.id }"><img class="img-responsive"src="${ p.image_url() }" alt="product_image"></a>
+<div class="product_name">
+    ${ p.name }
+</div>

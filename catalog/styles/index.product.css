@@ -34,6 +34,7 @@
 
 #catalog_tiles > li > .product_name{
     margin-top: 10px;
+    margin-bottom: 0;
     padding-top: 10px;
     text-align: center;
     color: #301a57;

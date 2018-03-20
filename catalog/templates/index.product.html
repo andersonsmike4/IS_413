@@ -2,8 +2,6 @@
 
 <%block name="middle_right_content">
     <ul id='catalog_tiles'>
-
-
         %for p in products:
         <li>
             <div class="product_price">
@@ -14,11 +12,9 @@
                 ${ p.name }
             </div>
             <div class="product_cat">
-                ${ p.category }
+                -${ p.category }-
             </div>
         </li>
         %endfor
-
-
     </ul>
 </%block>
