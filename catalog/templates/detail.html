@@ -12,7 +12,15 @@
             <img id='big_img' class="img-responsive img-thumbnail" src="${ product.image_url() }" alt="${ product.name } big image">
         </div>
     </div>
-    <p class="product_info">${ product.description }</p>
+    <div class="product_info">${ product.description }</div>
+
+    <div class="buy_product">
+        % if product.TITLE == 'Bulk':
+            <label for="quantity_input">Quantity:</label>
+            <input id="quantity_input" class="form-control" type="number" name="quantity" min="1" value="1">
+        % endif
+        <button id="buy_button" type="button" class="btn btn-primary">Buy</button>
+    </div>
 
 
 

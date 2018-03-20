@@ -28,7 +28,26 @@
 .product_info{
     color: #301a57;
     font-size: 12pt;
-    margin-left: 20px;
+    margin-left: 10px;
+    display: flex inline-block;
+    /* float: right; */
+}
+
+.buy_product{
     display: flex;
     float: right;
+    color: #301a57;
+    font-size: 16pt;
+    margin-left: 20px;
+    margin-top: 40px;
+}
+
+#quantity_input{
+    width: 75px;
+    margin-left: 10px;
+    margin-right: 25px;
+}
+
+#buy_button{
+    width: 80px;
 }

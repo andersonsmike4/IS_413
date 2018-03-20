@@ -29,25 +29,22 @@
 
 <%block name="left_content">
     <%
-        cat = None
+        catList = None
         p = ''
+        cats = cmod.Category.objects.all()
         if request.dmp.page == 'index':
             if request.dmp.urlparams[0] == '':
-                cat = None
+                catList = None
             else:
-                cat = cmod.Category.objects.filter(id = int(request.dmp.urlparams[0]))
+                catList = cmod.Category.objects.get(id = int(request.dmp.urlparams[0]))
         elif request.dmp.page == 'detail':
             p = cmod.Product.objects.get(id = int(request.dmp.urlparams[0]))
-            cat = p.category.id
-        print('>>>>>>>>>>>>>>>>>>>>>>> ', cat)
-
-        for c in cmod.Category.objects.all():
-            print(c)
+            catList = p.category
     %>
     <ul id=category_list>
-        <li><a class="${ 'selected' if cat == None else 'not_selected'}" href='/catalog/index/'>All Products</a></li>
-        % for c in cmod.Category.objects.all():
-            <li ><a class="${ 'selected' if cat == c else 'not_selected'}" href='/catalog/index/${ c.id }'>${ c.name }</a></li>
+        <li><a class="${ 'selected' if catList == None else 'not_selected'}" href='/catalog/index/'>All Products</a></li>
+        % for c in cats:
+            <li ><a class="${ 'selected' if catList == c else 'not_selected'}" href='/catalog/index/${ c.id }'>${ c.name }</a></li>
         % endfor
     </ul>
 </%block>
