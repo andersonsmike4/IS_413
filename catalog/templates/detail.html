@@ -1,18 +1,18 @@
 <%inherit file="app_base.htm" />
 
 <%block name="middle_content">
-    <h1 id="detail_h1">${ product.name }</h1>
+    <h1 id="detail_h1">${ product.name | h }</h1>
     <div class="product_images">
         <ul id="thumbnails">
             % for i in product.image_urls():
-                <li><img class="img-responsive img-thumbnail thumbnails_img" src="${ i }" alt="${ product.name }"></li>
+                <li><img class="img-responsive img-thumbnail thumbnails_img" src="${ i }" alt="${ product.name | h}"></li>
             % endfor
         </ul>
         <div id="big_image">
-            <img id='big_img' class="img-responsive img-thumbnail" src="${ product.image_url() }" alt="${ product.name } big image">
+            <img id='big_img' class="img-responsive img-thumbnail" src="${ product.image_url() }" alt="${ product.name | h} big image">
         </div>
     </div>
-    <div class="product_info">${ product.description }</div>
+    <div class="product_info">${ product.description | h }</div>
 
     <div class="buy_product">
         % if product.TITLE == 'Bulk':
