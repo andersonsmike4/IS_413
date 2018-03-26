@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'catalog.history.LastFiveMiddleware',
+    'account.basicauth.BasicAuthMiddleware',
 ]
 
 # AUTH_USER_MODEL = 'cuser.CUser'
