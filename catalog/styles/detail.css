@@ -30,24 +30,35 @@
     font-size: 12pt;
     margin-left: 10px;
     display: flex inline-block;
-    /* float: right; */
+    /* float: left; */
 }
 
 .buy_product{
-    display: flex;
-    float: right;
+    /* display: flex inline-block;
+    float: right; */
+    text-align: right;
     color: #301a57;
     font-size: 16pt;
-    margin-left: 20px;
     margin-top: 40px;
 }
 
+#id_quantity{
+    width: 80px;
+    display: flex;
+    float: right;
+    /* text-align: right; */
+    /* margin-left: 10px; */
+    /* margin-right: 25px; */
+}
+
 #quantity_input{
-    width: 75px;
+    width: 100px;
+    /* text-align: right; */
     margin-left: 10px;
     margin-right: 25px;
 }
 
 #buy_button{
     width: 80px;
+    display: inline-block;
 }

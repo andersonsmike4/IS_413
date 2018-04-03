@@ -1,4 +1,5 @@
 <%inherit file="app_base.htm" />
+<%namespace name="fl" module="formlib.tags"/>
 
 <%block name="middle_content">
     <h1 id="detail_h1">${ product.name | h }</h1>
@@ -12,14 +13,20 @@
             <img id='big_img' class="img-responsive img-thumbnail" src="${ product.image_url() }" alt="${ product.name | h} big image">
         </div>
     </div>
-    <div class="product_info">${ product.description | h }</div>
+    <div class="product_info">${ product.description }</div>
 
     <div class="buy_product">
-        % if product.TITLE == 'Bulk':
-            <label for="quantity_input">Quantity:</label>
-            <input id="quantity_input" class="form-control" type="number" name="quantity" min="1" value="1">
-        % endif
-        <button id="buy_button" type="button" class="btn btn-primary">Buy</button>
+        <%doc>
+            % if product.TITLE == 'Bulk':
+                <label for="quantity_input">Quantity:</label>
+                <input id="quantity_input" class="form-control" type="number" name="quantity" min="1" value="1">
+            % endif
+            <button id="buy_button" type="button" class="btn btn-primary">Buy</button>
+        </%doc>
+
+        <%fl:render form='${ add_to_cart_form }'>
+            <p><button id="buy_button" type="submit" class="btn btn-primary">Buy</button></p>        
+        </%fl:render>
     </div>
 
 

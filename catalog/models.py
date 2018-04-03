@@ -1,7 +1,7 @@
-from django.db import models
-from polymorphic.models import PolymorphicModel
+from django.db import models, transaction
 from django.conf import settings
 from django.forms.models import model_to_dict
+from polymorphic.models import PolymorphicModel
 from decimal import Decimal
 from datetime import datetime
 import stripe
@@ -119,7 +119,7 @@ class Order(models.Model):
     def active_items(self, include_tax_item=True):
         '''Returns the active items on this order'''
         # create a query object (filter to status='active')
-
+        active_items = OrderItem.objects.filter(status='active')
         # if we aren't including the tax item, alter the
         # query to exclude that OrderItem
         # I simply used the product name (not a great choice,
@@ -134,6 +134,9 @@ class Order(models.Model):
         elif create and item.status != 'active':
             item.status = 'active'
             item.quantity = 0
+        if item is not None:
+            item.recalculate()
+            item.save()
         item.recalculate()
         item.save()
         return item
@@ -161,7 +164,7 @@ class Order(models.Model):
 
     def finalize(self, stripe_charge_token):
         '''Runs the payment and finalizes the sale'''
-        with transaction.atomic():
+        # with transaction.atomic():
             # recalculate just to be sure everything is updated
 
             # check that all products are available
