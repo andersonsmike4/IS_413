@@ -9,17 +9,17 @@
                 <td>Name</td>
                 <td>Price</td>
                 <td>Quantity</td>
-                <td>Total</td>
+                <td>Extended</td>
             </tr>
         </thead>
         <tbody class="table_body">
             % for c in cart_items:
                 <tr>
-                    <td><a href="/catalog/detail/${ c.product.id }">${ c.description }</a></td>
+                    <td>${ c.description }</td>
                     <td>$${ c.price }</td>
                     <td>${ c.quantity }</td>
                     <td>$${ c.extended }</td>
-                    <td><a href="/catalog/edit_product/${ c.id }">Edit</a>&nbsp;|&nbsp;<a href="/catalog/delete_cart_item/${ c.id }">Remove</a></td>
+                    <td><a href="/manager/edit_product/${ c.id }">Edit</a>&nbsp;|&nbsp;<a href="/catalog/delete_cart_item/${ c.id }">Remove</a></td>
                 </tr>
             % endfor
             <tr>

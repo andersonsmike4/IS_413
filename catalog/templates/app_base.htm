@@ -52,8 +52,8 @@
 <%block name="right_content">
     <p id="rec_viewed">Recently Viewed:</p>
     <ol id="r_v_thumbnails">
-        % if request.dmp.page == 'index':
-            % for prod in request.last_five[0:5]:
+        % if request.dmp.page == 'detail':
+            % for prod in request.last_five[1:6]:
                 <li>
 
                     <a href="/catalog/detail/${ prod.id }"><img class="img-responsive img-thumbnail" src="${prod.image_url()}" alt="${ prod.name }"></a>
@@ -62,9 +62,8 @@
                     </div>
                 </li>
             % endfor
-        % endif
-        % if request.dmp.page == 'detail':
-            % for prod in request.last_five[1:6]:
+        % else:
+            % for prod in request.last_five[0:5]:
                 <li>
 
                     <a href="/catalog/detail/${ prod.id }"><img class="img-responsive img-thumbnail" src="${prod.image_url()}" alt="${ prod.name }"></a>

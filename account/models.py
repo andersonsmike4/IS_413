@@ -1,5 +1,7 @@
 from django.db import models
 from cuser.models import AbstractCUser
+from catalog import models as cmod
+import datetime
 
 # class Employee(models.Model):
 #     firstName = models.TextField(null = True)
@@ -18,5 +20,13 @@ class User(AbstractCUser):
         return [ 'Roku Ultimate 4', 'Skis', 'Computer' ]
 
     def shopping_cart(self):
-
+        # get cart items
         cart = self.orders.filter(status='cart').first()
+        if cart is None:
+            cart = cmod.Order()
+            cart.order_date = datetime.datetime.now()
+            cart.status = 'cart'
+            cart.user = self
+            cart.recalculate()
+            cart.save()
+        return cart

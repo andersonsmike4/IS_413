@@ -31,9 +31,9 @@ def process_request(request, category: cmod.Category = None):
 def product(request, category: cmod.Category = None, pnum: int=1):
 
     if category is None:
-        products = cmod.Product.objects.filter(status='A')
+        products = cmod.Product.objects.filter(status='A').exclude(id=74)
     else:
-        products = cmod.Product.objects.filter(category=category, status='A')
+        products = cmod.Product.objects.filter(category=category, status='A').exclude(id=74)
     last_number = pnum * 6
     first_number = last_number - 6
     products = products[first_number:last_number]

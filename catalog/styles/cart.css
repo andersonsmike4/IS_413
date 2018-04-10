@@ -1,0 +1,32 @@
+.table_head{
+    font-weight: bold;
+    color: #301a57;
+    /* text-align: right; */
+    font-size: 18pt;
+}
+
+.table_body{
+    color: #301a57;
+    /* text-align: right; */
+
+    font-size: 14pt;
+}
+
+.tr_height{
+    height: 10px;
+}
+
+.checkout_button{
+    margin-top: 40px;
+    text-align: center;
+}
+
+td{
+    text-align: center;
+}
+/* .cart_image{
+    min-height: 100px;
+    width: auto;
+    text-align: right;
+
+} */

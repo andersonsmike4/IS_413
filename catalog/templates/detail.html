@@ -13,7 +13,8 @@
             <img id='big_img' class="img-responsive img-thumbnail" src="${ product.image_url() }" alt="${ product.name | h} big image">
         </div>
     </div>
-    <div class="product_info">${ product.description }</div>
+    <div class="product_desc">${ product.description }</div>
+    ##<div class="product_price">Price: <span id="tot_prod_price">$${ product.price }</span></div>
 
     <div class="buy_product">
         <%doc>
@@ -25,7 +26,8 @@
         </%doc>
 
         <%fl:render form='${ add_to_cart_form }'>
-            <p><button id="buy_button" type="submit" class="btn btn-primary">Buy</button></p>        
+
+            <p><button id="buy_button" type="submit" class="btn btn-primary">Buy</button></p>
         </%fl:render>
     </div>
 

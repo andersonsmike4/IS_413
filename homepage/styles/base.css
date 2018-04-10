@@ -36,6 +36,18 @@ main {
     width: 18px;
 }
 
+.cart_image{
+    height: 25px;
+    width: 25px;
+    position: absolute;
+}
+
+.cart{
+    position: relative
+    left: -10px;
+    top: -5px;
+}
+
 body{
     color: black;
 }

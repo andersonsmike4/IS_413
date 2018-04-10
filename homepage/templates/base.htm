@@ -1,4 +1,5 @@
 ## this is the skeleton of all pages on in this app - it defines the basic html tags
+<%!from catalog import models as cmod %>
 <!DOCTYPE html>
 <html>
     <meta charset="UTF-8">
@@ -24,9 +25,11 @@
     <body>
         <a id="skip_to_main" href="#middle_content">Skip To Main Content</a>
         <header>
+            <%doc>
             <div class="maintenance_header">
                 <p class="maintenance_p">Please be advised that the site may be slow due to heavy traffic!</p>
             </div>
+            </%doc>
             <nav class="navbar navbar-inverse">
               <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -47,6 +50,15 @@
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                     <%block name='navbar_right_links'></%block>
+
+                    <%
+                        num = request.user.shopping_cart().num_items()
+                        if num == 0:
+                            num = ""
+                    %>
+
+                    <li><a href="/catalog/cart/"><img class="img-responsive image  cart_image"src='${STATIC_URL}homepage/media/images/cart.png'></a></li>
+                    <li><a class="cart" href="/catalog/cart/">${ num }</a></li>
                   </ul>
                 </div><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->

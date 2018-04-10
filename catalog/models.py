@@ -119,7 +119,8 @@ class Order(models.Model):
     def active_items(self, include_tax_item=True):
         '''Returns the active items on this order'''
         # create a query object (filter to status='active')
-        active_items = OrderItem.objects.filter(status='active')
+        tax_product = Product.objects.get(id=74)
+        return self.items.filter(status='active').exclude(description=tax_product.name).all()
         # if we aren't including the tax item, alter the
         # query to exclude that OrderItem
         # I simply used the product name (not a great choice,
@@ -157,10 +158,38 @@ class Order(models.Model):
         # iterate the order items (not including tax item) and get the total price
         # call recalculate on each item
 
+        tax_product = Product.objects.get(id=74)
+        order_items = self.items.all()
+        total_price = 0
+        create = True
+        for i in order_items:
+            i.recalculate()
+            total_price += i.extended
+            if i.description == tax_product.name:
+                create = False
+
+
         # update/create the tax order item (calculate at 7% rate)
 
-        # update the total and save
+        # sales_tax_item = self.get_item(tax_product)
+        if create:
+            tax_item = OrderItem()
+            tax_item.price = 0
+            tax_item.description = tax_product.name
+            tax_item.quantity = 1
+            tax_item.order = self
+            tax_item.product = tax_product
+            print('>>>>>>>>>>>>>>>>>>>', create)
+            tax_item.save()
 
+
+        tax_item = self.get_item(tax_product, create)
+        tax_item.price = Decimal(total_price) * Decimal(0.07)
+        tax_item.recalculate()
+        # tax_item.save()
+        # update the total and save
+        self.total_price = total_price + tax_item.price
+        self.save()
 
     def finalize(self, stripe_charge_token):
         '''Runs the payment and finalizes the sale'''
@@ -198,16 +227,17 @@ class OrderItem(PolymorphicModel):
         return 'OrderItem {}: {}: {}'.format(self.id, self.product.name, self.extended)
 
 
-    def recalculate(self):
+    def recalculate(self, product=None):
         '''Updates the order item's price, quantity, extended'''
         # update the price if it isn't already set and we have a product
-
+        if product is not None and self.price is not None:
+            self.price = product.price
         # default the quantity to 1 if we don't have a quantity set
 
         # calculate the extended (price * quantity)
-
+        self.extended = self.price * self.quantity
         # save the changes
-
+        self.save()
 
 class Payment(models.Model):
     '''A payment on a sale'''
