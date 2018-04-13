@@ -26,6 +26,8 @@ SECRET_KEY = 'iksq!h%3__=xk1qjvg0o(pppmd0oujbn(w%7gak3vi5%$%e5-!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+STRIPE_SECRET_KEY = 'sk_test_Z3vmXGefK732TfqFV7V7xaet'
+
 ALLOWED_HOSTS = []
 
 

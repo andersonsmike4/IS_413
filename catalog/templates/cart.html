@@ -1,7 +1,7 @@
 <%inherit file="app_base.htm" />
 
 <%block name="middle_content">
-    <h1>this is the cart</h1>
+    <h1 id="cart_h1">Cart</h1>
 
     <table class="table table-responsive table-hover">
         <thead class="table_head">
@@ -19,9 +19,14 @@
                     <td>$${ c.price }</td>
                     <td>${ c.quantity }</td>
                     <td>$${ c.extended }</td>
-                    <td><a href="/catalog/edit_product/${ c.id }">Edit</a>&nbsp;|&nbsp;<a href="/catalog/delete_cart_item/${ c.id }">Remove</a></td>
+                    %if c.product.__class__.__name__ == 'BulkProduct':
+                        <td><a href="/catalog/detail/${ c.product.id }">Add More</a>&nbsp;|&nbsp;<a href="/catalog/delete_cart_item/${ c.id }">Remove</a></td>
+                    %else:
+                        <td><a href="/catalog/delete_cart_item/${ c.id }">Remove</a></td>
+                    %endif
                 </tr>
             % endfor
+
             <tr>
                 <td>${ tax_item.description  }</td>
                 <td></td>

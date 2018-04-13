@@ -24,6 +24,13 @@
 td{
     text-align: center;
 }
+
+#cart_h1{
+    color: #301a57;
+    text-align: center;
+    font-size: 30pt;
+    text-decoration: underline overline;
+}
 /* .cart_image{
     min-height: 100px;
     width: auto;

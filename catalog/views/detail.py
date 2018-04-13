@@ -20,7 +20,7 @@ def process_request(request, product: cmod.Product = None):
     initial={'quantity': 1, 'id':product.id}
 
     # get quantiy available and set initial to Out of Stock if there is none avialable
-    cart = request.user.shopping_cart().items.all()
+    cart = request.user.get_shopping_cart().items.all()
     if product.__class__.__name__ == 'BulkProduct':
         quant_avail = product.quantity
         for c in cart:
@@ -55,7 +55,7 @@ class AddToCartForm(Formless):
     '''An example form'''
     def init(self):
         self.fields['id'] = forms.CharField(widget=forms.HiddenInput)
-        cart = self.request.user.shopping_cart().active_items()
+        cart = self.request.user.get_shopping_cart().active_items()
         min = 1
         if self.prod.__class__.__name__ == 'BulkProduct':
             quant_avail = self.prod.quantity
@@ -91,7 +91,7 @@ class AddToCartForm(Formless):
     #
     def commit(self, request, product):
         '''Process the form action'''
-        order = request.user.shopping_cart()
+        order = request.user.get_shopping_cart()
         item = order.get_item(product=product, create=True)
         if product.__class__.__name__ == 'BulkProduct':
             item.quantity += self.cleaned_data.get('quantity')

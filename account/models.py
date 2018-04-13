@@ -19,7 +19,7 @@ class User(AbstractCUser):
     def get_purchases(self):
         return [ 'Roku Ultimate 4', 'Skis', 'Computer' ]
 
-    def shopping_cart(self):
+    def get_shopping_cart(self):
         # get cart items
         cart = self.orders.filter(status='cart').first()
         if cart is None:

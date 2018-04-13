@@ -5,23 +5,43 @@ from catalog import models as cmod
 from formlib import Formless
 import math
 from django import forms
-from django.contrib.auth.decorators import login_required
 
-@login_required
+from django.http import HttpResponseRedirect
+
+
 @view_function
-def process_request(request, product: cmod.Product = None):
+def process_request(request):
+    cart = request.user.get_shopping_cart()
+    cart.recalculate()
+    checkout_form = CheckoutForm(request)
+    checkout_form.submit_text=None
+    if checkout_form.is_valid():
+        checkout_form.commit(request)
+        return HttpResponseRedirect('/catalog/thanks')
 
-    cart_items = request.user.shopping_cart().active_items()
-    # cart_items = request.user.shopping_cart().items.all()
-    cart = request.user.shopping_cart()
-    tax_product = cmod.Product.objects.get(id=74)
-    tax_item = cmod.OrderItem.objects.get(description=tax_product.name)
     context = {
         # sent to index.html:
-        'cart_items': cart_items,
+        'checkout_form': checkout_form,
         'cart': cart,
-        'tax_item': tax_item,
         # sent to index.html and index.js:
         # jscontext(): ,
     }
-    return request.dmp.render('cart.html', context)
+    return request.dmp.render('checkout.html', context)
+
+class CheckoutForm(Formless):
+    def init(self):
+        self.fields['ship_fname'] = forms.CharField(label='First Name')
+        self.fields['ship_lname'] = forms.CharField(label='Last Name')
+        self.fields['ship_address'] = forms.CharField(label='Street Address')
+        self.fields['ship_city'] = forms.CharField(label='City')
+        self.fields['ship_state'] = forms.CharField(label='State')
+        self.fields['ship_zip_code'] = forms.CharField(label='Zip Code')
+        self.fields['stripetToken'] = forms.CharField(widget=forms.HiddenInput)
+
+
+    def clean(self):
+        pass
+
+    def commit(self, request):
+        '''Process the form action'''
+        pass

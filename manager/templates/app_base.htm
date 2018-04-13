@@ -2,9 +2,9 @@
 
 <%block name="navbar_links">
     <li><a href="/homepage/index/">Home</a></li>
-    <li class="${ 'active' if request.dmp.page == '/manager/index/' else ''}"><a href="/manager/index/">Manager</a></li>
+    <li class="${ 'active' if request.dmp.page == 'index' else ''}"><a href="/manager/index/">Manager</a></li>
     <li class="${ 'active' if request.dmp.page == 'product_list' else ''}"><a href="/manager/product_list/">Products</a></li>
-    <li class="${ 'active' if request.dmp.page == 'index' else ''}"><a href="/catalog/index/">Catalog</a></li>
+    <li class="${ 'active' if request.dmp.page == '/catalog/index/' else ''}"><a href="/catalog/index/">Catalog</a></li>
 </%block>
 
 <%block name='navbar_right_links'>
@@ -13,7 +13,7 @@
             <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button">Hello, ${ user.email }<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="/account/index/">My Account</a></li>
-              %if request.user.is_superuser:
+              %if request.user.is_superuser or request.user.is_staff:
               <li><a href="/manager/index/">Manager</a></li>
               %endif
               <li role="separator" class="divider"></li>

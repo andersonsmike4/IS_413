@@ -120,7 +120,7 @@ class Order(models.Model):
         '''Returns the active items on this order'''
         # create a query object (filter to status='active')
         tax_product = Product.objects.get(id=74)
-        return self.items.filter(status='active').exclude(description=tax_product.name).all()
+        return self.items.filter(status='active').exclude(description=tax_product.name)
         # if we aren't including the tax item, alter the
         # query to exclude that OrderItem
         # I simply used the product name (not a great choice,
@@ -159,14 +159,17 @@ class Order(models.Model):
         # call recalculate on each item
 
         tax_product = Product.objects.get(id=74)
-        order_items = self.items.all()
+        order_items = self.active_items()
         total_price = 0
         create = True
         for i in order_items:
             i.recalculate()
             total_price += i.extended
-            if i.description == tax_product.name:
-                create = False
+
+        tax = self.items.filter(description=tax_product.name)
+        print('>>>>>>>>>>>>>>>>>>>>>>', tax)
+        if tax is not None:
+            create = False
 
 
         # update/create the tax order item (calculate at 7% rate)
@@ -179,7 +182,6 @@ class Order(models.Model):
             tax_item.quantity = 1
             tax_item.order = self
             tax_item.product = tax_product
-            print('>>>>>>>>>>>>>>>>>>>', create)
             tax_item.save()
 
 

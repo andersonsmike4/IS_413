@@ -52,9 +52,11 @@
                     <%block name='navbar_right_links'></%block>
 
                     <%
-                        num = request.user.shopping_cart().num_items()
-                        if num == 0:
-                            num = ""
+                        num = ""
+                        if request.user.is_authenticated:
+                            num = request.user.get_shopping_cart().num_items()
+                            if num == 0:
+                                num = ""
                     %>
 
                     <li><a href="/catalog/cart/"><img class="img-responsive image  cart_image"src='${STATIC_URL}homepage/media/images/cart.png'></a></li>

@@ -6,13 +6,15 @@ from catalog import models as cmod
 from formlib import Formless
 import math
 from django import forms
-from django.contrib.auth.decorators import login_required
 
-@login_required
+
+
 @view_function
 def process_request(request, item: cmod.OrderItem = None):
 
-    item.status = 'deleted'    
+    item.status = 'deleted'
+    item.recalculate()
+    item.order.recalculate()
     item.save()
 
     return HttpResponseRedirect('/catalog/cart/')
