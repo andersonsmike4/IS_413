@@ -23,10 +23,12 @@ class User(AbstractCUser):
         # get cart items
         cart = self.orders.filter(status='cart').first()
         if cart is None:
-            cart = cmod.Order()
-            cart.order_date = datetime.datetime.now()
-            cart.status = 'cart'
-            cart.user = self
-            cart.recalculate()
+            new_cart = cmod.Order()
+            new_cart.order_date = datetime.datetime.now()
+            new_cart.status = 'cart'
+            new_cart.user = self
+            cart = new_cart
             cart.save()
+        cart.recalculate()
+
         return cart

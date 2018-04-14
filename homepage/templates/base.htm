@@ -52,12 +52,17 @@
                     <%block name='navbar_right_links'></%block>
 
                     <%
-                        num = ""
+                        num = None
                         if request.user.is_authenticated:
-                            num = request.user.get_shopping_cart().num_items()
-                            if num == 0:
+                            cart = request.user.get_shopping_cart()
+
+                            num = cart.num_items()
+                            if num == 0 or num is None:
                                 num = ""
+                        else:
+                            num=""
                     %>
+
 
                     <li><a href="/catalog/cart/"><img class="img-responsive image  cart_image"src='${STATIC_URL}homepage/media/images/cart.png'></a></li>
                     <li><a class="cart" href="/catalog/cart/">${ num }</a></li>

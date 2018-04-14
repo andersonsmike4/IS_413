@@ -28,7 +28,8 @@ class Product(PolymorphicModel):
 
     STATUS_CHOICES = (
       ( 'A', 'Active' ),
-      ( 'I', 'Inactive' )
+      ( 'I', 'Inactive' ),
+      ( 'U', 'Unavailable' )
     )
 
     name = models.TextField()
@@ -166,17 +167,21 @@ class Order(models.Model):
             i.recalculate()
             total_price += i.extended
 
-        tax = self.items.filter(description=tax_product.name)
-        print('>>>>>>>>>>>>>>>>>>>>>>', tax)
-        if tax is not None:
-            create = False
+        all_items = self.items.all()
+        for ai in all_items:
+            if ai.description==tax_product.name:
+                create=False
+                print('>>>>>>>>>> False')
+
 
 
         # update/create the tax order item (calculate at 7% rate)
-
+        print('create>>>>>>>>>>> ',create)
         # sales_tax_item = self.get_item(tax_product)
         if create:
+            print('>>>>>>>>>> True')
             tax_item = OrderItem()
+            print('this created a tax item')
             tax_item.price = 0
             tax_item.description = tax_product.name
             tax_item.quantity = 1
@@ -186,29 +191,79 @@ class Order(models.Model):
 
 
         tax_item = self.get_item(tax_product, create)
-        tax_item.price = Decimal(total_price) * Decimal(0.07)
+        tax_item.price = round(Decimal(total_price) * Decimal(0.07), 2)
         tax_item.recalculate()
         # tax_item.save()
         # update the total and save
-        self.total_price = total_price + tax_item.price
+        self.total_price = round(Decimal(total_price) + Decimal(tax_item.price), 2)
         self.save()
 
     def finalize(self, stripe_charge_token):
         '''Runs the payment and finalizes the sale'''
-        # with transaction.atomic():
-            # recalculate just to be sure everything is updated
+        with transaction.atomic():
+            #recalculate just to be sure everything is updated
+            self.recalculate()
+
 
             # check that all products are available
+            order_items = self.active_items()
+            for oi in order_items:
+                product = oi.product
+                if product.__class__.__name__ == 'BulkProduct':
+                    if oi.quantity > product.quantity:
+                        if product.quantity == 0:
+                            raise ValueError('We apoligize, but this item is no longer in stock')
+                        else:
+                            raise ValueError('We apoligize, but there is only ' + product.quantity + ' items available now')
+                else:
+                    if oi.quantity != 1:
+                        raise ValueError('We apoligize, but may only buy 1 of these items')
+                    if product.status == 'U':
+                        raise ValueError('Oops! This was purchased by somebody else.')
 
             # contact stripe and run the payment (using the stripe_charge_token)
+            stripe.api_key = settings.STRIPE_SECRET_KEY
+
+            # Get the payment token ID submitted by the form:
+            token = stripe_charge_token
+
+            total_charged = float(self.total_price) * 100
+
+            charge = stripe.Charge.create(
+                amount=int(total_charged),
+                currency='usd',
+                description='Order Number: ' + str(self.id) + ' User Id: ' + str(self.user.id),
+                source=token,
+            )
+
+
+
 
             # finalize (or create) one or more payment objects
+            payment = Payment()
+            payment.order = self
+            payment.payment_date = datetime.now()
+            payment.amount = total_charged
+            payment.validation_code = token
+            payment.save()
 
             # set order status to sold and save the order
-
+            self.status = 'sold'
+            self.save()
+            print('>>>>>>>>>>>>>>>>>>> We got this far')
             # update product quantities for BulkProducts
             # update status for IndividualProducts
-
+            for oi in order_items:
+                product = oi.product
+                if product.__class__. __name__ == 'BulkProduct':
+                    in_stock = int(product.quantity) - int(oi.quantity)
+                    product.quantity = int(in_stock)
+                    if int(in_stock) == 0:
+                        product.status = 'U'
+                else:
+                    product.status = 'U'
+                product.save()
+            print('>>>>>>>>>>>>>>>>>>> We got through finalize!!!!!')
 
 class OrderItem(PolymorphicModel):
     '''A line item on an order'''
