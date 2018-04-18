@@ -13,7 +13,6 @@ from django import forms
 def process_request(request, item: cmod.OrderItem = None):
 
     item.status = 'deleted'
-    item.recalculate()
     item.order.recalculate()
     item.save()
 

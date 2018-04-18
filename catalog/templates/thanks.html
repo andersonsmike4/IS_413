@@ -1,7 +1,64 @@
 <%inherit file="app_base.htm" />
 
 <%block name="middle_content">
-    <h1>Thanks</h1>
+    <h1>Thank You For Shopping!</h1>
+    <div class="box" id="order-summary">
+    <div class="box-header">
+    </div>
+
+    <table class="table">
+        <thead>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total Price</th>
+        </thead>
+        <tbody>
+          %for i in items:
+            <%qty = 0 %>
+            %if i.quantity is None:
+              <%qty = 1%>
+            %else:
+            <%qty = i.quantity%>
+            %endif
+            <%title = i.product.TITLE %>
+            %if title != 'Rental':
+            <%  title = 'Product'%>
+            %endif
+            <tr>
+                <td>${ i.product.name }</td>
+                <td>${ qty }</td>
+                <td>$${ i.price }</td>
+                <td>$${ i.extended }</td>
+            </tr>
+          %endfor
+        </tbody>
+    </table>
+
+    <div class="table-responsive">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Order subtotal</td>
+                    <th>$${ cart.total_price - tax.price }</th>
+                </tr>
+                <tr>
+                    <td>Shipping and handling</td>
+                    <th>$0.00</th>
+                </tr>
+                <tr>
+                    <td>Tax</td>
+                    <th>$${ tax.price }</th>
+                </tr>
+                <tr class="total">
+                    <td>Total</td>
+                    <th>$${ cart.total_price }</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <a href="/catalog/" class="btn btn-primary cart_button">Continue Shopping</a>
+</div>
 
 
 

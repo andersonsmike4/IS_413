@@ -57,8 +57,7 @@
                             cart = request.user.get_shopping_cart()
 
                             num = cart.num_items()
-                            if num == 0 or num is None:
-                                num = ""
+                            
                         else:
                             num=""
                     %>

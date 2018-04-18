@@ -10,12 +10,16 @@ from django.http import HttpResponseRedirect
 
 
 @view_function
-def process_request(request, product: cmod.Product = None):
-    
+def process_request(request, cart:cmod.Order):
+    tax_product = cmod.Product.objects.get(id=74)
+    items = cart.active_items().exclude(description=tax_product.name)
+    tax = cart.items.get(description=tax_product.name)
+    print('>>>>>>>>>>>.cart yay i have items', items)
     context = {
         # sent to index.html:
-
-        # sent to index.html and index.js:
-        # jscontext(): ,
+        'cart': cart,
+        'items': items,
+        'tax': tax,
     }
     return request.dmp.render('thanks.html', context)
+    # return request.dmp.render('cart.html', context)

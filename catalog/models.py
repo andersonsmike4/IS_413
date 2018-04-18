@@ -121,7 +121,8 @@ class Order(models.Model):
         '''Returns the active items on this order'''
         # create a query object (filter to status='active')
         tax_product = Product.objects.get(id=74)
-        return self.items.filter(status='active').exclude(description=tax_product.name)
+        return self.items.filter(status='active')
+        #.exclude(description=tax_product.name)
         # if we aren't including the tax item, alter the
         # query to exclude that OrderItem
         # I simply used the product name (not a great choice,
@@ -146,7 +147,8 @@ class Order(models.Model):
 
     def num_items(self):
         '''Returns the number of items in the cart'''
-        return sum(self.active_items(include_tax_item=False).values_list('quantity', flat=True))
+        tax_product = Product.objects.get(id=74)
+        return sum(self.active_items(include_tax_item=False).exclude(description=tax_product.name).values_list('quantity', flat=True))
 
 
     def recalculate(self):
@@ -164,24 +166,16 @@ class Order(models.Model):
         total_price = 0
         create = True
         for i in order_items:
-            i.recalculate()
-            total_price += i.extended
-
-        all_items = self.items.all()
-        for ai in all_items:
-            if ai.description==tax_product.name:
+            if i.description==tax_product.name:
                 create=False
-                print('>>>>>>>>>> False')
-
-
+            else:
+                i.recalculate()
+                total_price += i.extended
 
         # update/create the tax order item (calculate at 7% rate)
-        print('create>>>>>>>>>>> ',create)
         # sales_tax_item = self.get_item(tax_product)
         if create:
-            print('>>>>>>>>>> True')
             tax_item = OrderItem()
-            print('this created a tax item')
             tax_item.price = 0
             tax_item.description = tax_product.name
             tax_item.quantity = 1
@@ -191,8 +185,9 @@ class Order(models.Model):
 
 
         tax_item = self.get_item(tax_product, create)
-        tax_item.price = round(Decimal(total_price) * Decimal(0.07), 2)
+        tax_item.price = Decimal(total_price) * Decimal(0.07)
         tax_item.recalculate()
+
         # tax_item.save()
         # update the total and save
         self.total_price = round(Decimal(total_price) + Decimal(tax_item.price), 2)
@@ -210,16 +205,25 @@ class Order(models.Model):
             for oi in order_items:
                 product = oi.product
                 if product.__class__.__name__ == 'BulkProduct':
+                    print('>>>>>>>>>>>>>>>>>>> We got this far bulk')
+
                     if oi.quantity > product.quantity:
                         if product.quantity == 0:
-                            raise ValueError('We apoligize, but this item is no longer in stock')
+                            raise ValueError('We apoligize, but ' + product.name + ' is no longer in stock')
                         else:
-                            raise ValueError('We apoligize, but there is only ' + product.quantity + ' items available now')
+                            raise ValueError('We apoligize, but there is only ' + product.quantity + ' ' + product.name + ' available now')
                 else:
+                    print('>>>>>>>>>>>>>>>>>>> We got this far ind')
+
                     if oi.quantity != 1:
-                        raise ValueError('We apoligize, but may only buy 1 of these items')
-                    if product.status == 'U':
-                        raise ValueError('Oops! This was purchased by somebody else.')
+                        print('>>>>>>>>>>>>>>>>>>> quantity not 1')
+
+                        raise ValueError('We apoligize, but may only buy 1 ' + product.name)
+                    if product.status != 'A':
+                        print('>>>>>>>>>>>>>>>>>>>', product.status)
+                        print('>>>>>>>>>>>>>>>>>>>', product.name)
+
+                        raise ValueError('Oops! ' + product.name + ' is no longer available.')
 
             # contact stripe and run the payment (using the stripe_charge_token)
             stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -243,14 +247,13 @@ class Order(models.Model):
             payment = Payment()
             payment.order = self
             payment.payment_date = datetime.now()
-            payment.amount = total_charged
+            payment.amount = round(Decimal(total_charged/100))
             payment.validation_code = token
             payment.save()
 
-            # set order status to sold and save the order
-            self.status = 'sold'
-            self.save()
-            print('>>>>>>>>>>>>>>>>>>> We got this far')
+
+
+
             # update product quantities for BulkProducts
             # update status for IndividualProducts
             for oi in order_items:
@@ -261,8 +264,17 @@ class Order(models.Model):
                     if int(in_stock) == 0:
                         product.status = 'U'
                 else:
-                    product.status = 'U'
+                    if product.id == 74:
+                        product.status = 'A'
+                    else:
+                        product.status = 'U'
                 product.save()
+
+            # set order status to sold and save the order
+            print('status>>>>>>>', self.status)
+            self.status = 'sold'
+            self.save()
+            print('status>>>>>>>', self.status)
             print('>>>>>>>>>>>>>>>>>>> We got through finalize!!!!!')
 
 class OrderItem(PolymorphicModel):

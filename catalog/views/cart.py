@@ -14,17 +14,20 @@ def process_request(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect('/account/login/')
 
-
-    products = cmod.Product.objects.all()
-    cart_items = request.user.get_shopping_cart().active_items()
-    # cart_items = request.user.get_shopping_cart().items.all()
     cart = request.user.get_shopping_cart()
+    cart.recalculate()
+    products = cmod.Product.objects.all()
+    tax_product = cmod.Product.objects.get(id=74)
+    tax_item = cmod.OrderItem.objects.get(description=tax_product.name, order=cart)
+    cart_items = request.user.get_shopping_cart().active_items().exclude(description=tax_product.name)
+    print('>>>>>>>>>>>>',tax_item.price)
+    # cart_items = request.user.get_shopping_cart().items.all()
+
     # redirect to catalog if there are no items inthe cart
     if cart.total_price == 0:
         return HttpResponseRedirect('/catalog/index/')
 
-    tax_product = cmod.Product.objects.get(id=74)
-    tax_item = cmod.OrderItem.objects.get(description=tax_product.name)
+
     context = {
         # sent to index.html:
         'cart_items': cart_items,

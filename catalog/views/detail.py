@@ -67,6 +67,8 @@ class AddToCartForm(Formless):
                         min = 0
         if min == 0:
             self.fields['quantity'] = forms.CharField(widget=forms.TextInput(attrs={'readonly':'True'}), label='Quantity:', required=True)
+        elif self.prod.status != 'A':
+            self.fields['quantity'] = forms.CharField(widget=forms.TextInput(attrs={'readonly':'True'}), required=True)
         else:
             if self.prod.__class__.__name__ == 'BulkProduct':
                 self.fields['quantity'] = forms.IntegerField(label='Quantity:', required=True, min_value=min, max_value=quant_avail)

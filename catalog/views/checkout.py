@@ -11,14 +11,19 @@ from django.http import HttpResponseRedirect
 
 @view_function
 def process_request(request):
+
     cart = request.user.get_shopping_cart()
     cart.recalculate()
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/account/login/')
+    if cart.total_price == 0:
+        return HttpResponseRedirect('/catalog/index/')
     checkout_form = CheckoutForm(request)
     checkout_form.submit_text=None
 
     if checkout_form.is_valid():
         checkout_form.commit(request, cart)
-        return HttpResponseRedirect('/catalog/thanks/')
+        return HttpResponseRedirect('/catalog/thanks/' + str(cart.id))
 
     context = {
         # sent to index.html:
@@ -46,11 +51,12 @@ class CheckoutForm(Formless):
         stripeToken = self.cleaned_data.get('stripeToken')
         try:
             cart.finalize(stripeToken)
-            print('>>>>>>>>>>>>>>>>>>> We got this far')
-
-        except:
+        except(ValueError) as e:
             print('>>>>>>>>>>>', traceback.print_exc)
-            raise forms.ValidationError("Transaction was not recorded. Please Try again.")
+            if e:
+                raise forms.ValidationError(e)
+            else:
+                raise forms.ValidationError('Transaction failed. Please try again.')
 
         return self.cleaned_data
 
@@ -59,10 +65,11 @@ class CheckoutForm(Formless):
 
     def commit(self, request, cart):
         '''Process the form action'''
-        cart.ship_name = (str(self.cleaned_data.get('lname')) + ', ' + str(self.cleaned_data.get('fname')))
+        cart.ship_name = (str(self.cleaned_data.get('ship_lname')) + ', ' + str(self.cleaned_data.get('ship_fname')))
         cart.ship_address = self.cleaned_data.get('ship_address')
         cart.ship_city = self.cleaned_data.get('ship_city')
         cart.ship_state = self.cleaned_data.get('ship_state')
         cart.ship_zip_code = self.cleaned_data.get('ship_zip_code')
         cart.ship_date = datetime.now()
+        cart.status = 'sold'
         cart.save()
